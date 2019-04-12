@@ -72,11 +72,18 @@ start_time: 0
 
 ####################################################
 # SITE specific configuration
-# this is the scheduler to be used for the workshop
-# possible values: slurm (planned lsf & pbs)
+# * scheduler: this is the scheduler to be used for the workshop
+#   possible values: slurm (planned lsf & pbs)
 scheduler: "slurm"
+# * login_host: the host name of the cluster login node
 login_host: "cray-1"
+# * login_hostname: the login node's host name as printed by `hostname` as well
+#   as displayed by the shell prompt
+login_hostname: "cray-1"
+# * cluster_name: the people-friendly name of the cluster
 cluster_name: "cray-1"
+# * shared_fast_filesystem: the location of the fast filesystem (which usually is also the
+#   scratch space)
 shared_fast_filesystem: "/fastfs"
 
 
