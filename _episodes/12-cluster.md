@@ -43,10 +43,15 @@ $ ssh lola@{{ site.login_hostname }}
 ~~~
 {: .language-bash}
 
+The admin explains to Lola that she is using a program known as the secure shell or `ssh`.
+This establishes a temporary encrypted connection between Lola's laptop and the cluster's login node
+named `{{ site.login_hostname }}`.
+The word before the `@` symbol, e.g. `lola` here, is Lola's user name on the cluster.
+
 > ## Logging in
 > 
 > If you do this material on your own, be sure to replace `lola` with the username that is
-> assigned to you on {{ site.cluster_name }}. When you hit <kbd>Enter</kbd>, a prompt like this
+> assigned to you on `{{ site.cluster_name }}`. When you hit <kbd>Enter</kbd>, a prompt like this
 > might appear:
 >
 > ~~~
@@ -65,15 +70,35 @@ Last login: Fri Dec 14 14:13:14 2018 from lolas_laptop
 ~~~
 {: .output}
 
-The admin explains to Lola that she is using a program known as the secure shell or `ssh`.
-This establishes a temporary encrypted connection between Lola's laptop and `{{ site.login_hostname }}`.
-The word before the `@` symbol, e.g. `lola` here, is the user account name that Lola has access
-permissions for on the cluster.
-
 > ## Where do I get this `ssh` from ?
 > On Linux and/or macOS, the `ssh` command line utility is almost always pre-installed. Open a terminal and type `ssh --help` to check if that is the case. 
 > 
 > At the time of writing, the openssh support on Microsoft is still very [recent](https://blogs.msdn.microsoft.com/powershell/2017/12/15/using-the-openssh-beta-in-windows-10-fall-creators-update-and-windows-server-1709/). Alternatives to this are [putty](http://www.putty.org), [bitvise SSH](https://www.bitvise.com/ssh-client-download), [mRemoteNG](https://mremoteng.org/) or [MobaXterm](https://mobaxterm.mobatek.net/). Download it, install it and open the GUI. The GUI asks for your user name and the destination address or IP of the computer you want to connect to. Once provided, you will be queried for your password just like in the example above.
+{: .callout}
+
+> ## Understanding Computer Names
+>
+> There are multiple names which refer to the same super computer.
+>
+> * People's friendly name (`{{ site.cluster_name }}`): This is the non-technical name of the
+>   super computer, by which it is commonly known (both by the users and non-users of the
+>   computer).
+>
+> * Full host name (`{{ site.login_hostname }}`) is the name of a computer on the network.
+>   Technically, this is called [*fully qualified domain name*](
+>       https://en.wikipedia.org/wiki/Fully_qualified_domain_name
+>   ); behind the scene, it is mapped to the IP address of the computer.
+>   We must use the full host name to connect to the cluster using the `ssh` and (later) `scp`
+>   commands.
+>
+> * Short host name (`{{ site.login_host }}`) is the technical "nickname" of the computer.
+>   This is also displayed in the shell prompt, as shown in Lola's case right after she logs in
+>   to the cluster.
+>   (Usually it is the first word in the full host name, but sometimes it can be different.
+>   Some clusters have more than one login nodes, and this short name will tell you the
+>   exact login node that you are connecting to.)
+>
+> For convenience, we will frequently refer to the cluster's login node by its short name.
 {: .callout}
 
 Lola is asked to use a UNIX command called `ls` (for list directory contents) to have a look around. 
