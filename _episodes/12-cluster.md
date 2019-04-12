@@ -31,11 +31,12 @@ super computer after she has requested an account on the cluster.
 
 Lola walks to the IT department and finishes the paper work to get an account. One of the admins 
 promises to sit down with her in the morning to show her the way around the machine. The admin 
-explains that Lola will use a small to mid-range HPC cluster.
+explains that Lola will use a small to mid-range HPC cluster named `{{ site.cluster_name }}`.
 
 ## Going remote
 
-First of all, the admin asks Lola to connect to the super computer. The admin asks Lola to open a terminal on her laptop and type in the following commands:
+First of all, the admin teaches Lola how to connect to the `{{ site.cluster_name }}` super computer.
+The admin asks Lola to open a terminal on her laptop and type in the following commands:
 
 ~~~ 
 $ ssh lola@{{ site.login_hostname }}
@@ -44,7 +45,9 @@ $ ssh lola@{{ site.login_hostname }}
 
 > ## Logging in
 > 
-> If you do this material on your own, be sure to replace `lola` with the username that is attributed to you on {{ site.login_host }}. When you hit enter, a prompt like this might appear:
+> If you do this material on your own, be sure to replace `lola` with the username that is
+> assigned to you on {{ site.cluster_name }}. When you hit <kbd>Enter</kbd>, a prompt like this
+> might appear:
 >
 > ~~~
 > lola@{{ site.login_hostname }}'s password:
@@ -54,13 +57,18 @@ $ ssh lola@{{ site.login_hostname }}
 > Now is your chance to type in your password. But watch out, the characters you type are not displayed on the screen.
 {: .callout}
 
+After Lola's password is accepted, the following message may appear on her terminal:
+
 ~~~ 
 Last login: Fri Dec 14 14:13:14 2018 from lolas_laptop
-$ 
+[lola@{{ site.login_host }}] $
 ~~~
 {: .output}
 
-The admin explains to Lola that she is using a program known as the secure shell or `ssh`. This establishes a temporary encrypted connection between Lola's laptop and `{{ site.login_host }}`. The word before the `@` symbol, e.g. `lola` here, is the user account name that Lola has access permissions for on the cluster. 
+The admin explains to Lola that she is using a program known as the secure shell or `ssh`.
+This establishes a temporary encrypted connection between Lola's laptop and `{{ site.login_hostname }}`.
+The word before the `@` symbol, e.g. `lola` here, is the user account name that Lola has access
+permissions for on the cluster.
 
 > ## Where do I get this `ssh` from ?
 > On Linux and/or macOS, the `ssh` command line utility is almost always pre-installed. Open a terminal and type `ssh --help` to check if that is the case. 
@@ -109,7 +117,10 @@ $ nproc --all
 ~~~
 {: .language-bash}
 
-- every cluster node has a certain amount of memory or [RAM](https://en.wikipedia.org/wiki/Random-access_memory) (Random-access memory). To see much memory `{{ site.login_host }}` in units of [Gigabyte](https://en.wikipedia.org/wiki/Gigabyte) has, Lola can run
+- every cluster node has a certain amount of memory or
+  [RAM](https://en.wikipedia.org/wiki/Random-access_memory) (Random-access memory).
+  To see how much memory `{{ site.login_host }}` has in units of
+  [Gigabyte](https://en.wikipedia.org/wiki/Gigabyte) has, Lola can run
 
 ~~~
 $ free -g
