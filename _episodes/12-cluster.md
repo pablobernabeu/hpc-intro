@@ -31,41 +31,74 @@ super computer after she has requested an account on the cluster.
 
 Lola walks to the IT department and finishes the paper work to get an account. One of the admins 
 promises to sit down with her in the morning to show her the way around the machine. The admin 
-explains that Lola will use a small to mid-range HPC cluster.
+explains that Lola will use a small to mid-range HPC cluster named `{{ site.cluster_name }}`.
 
 ## Going remote
 
-First of all, the admin asks Lola to connect to the super computer. The admin asks Lola to open a terminal on her laptop and type in the following commands:
+First of all, the admin teaches Lola how to connect to the `{{ site.cluster_name }}` super computer.
+The admin asks Lola to open a terminal on her laptop and type in the following commands:
 
 ~~~ 
-$ ssh lola@{{ site.login_host }}
+$ ssh lola@{{ site.login_hostname }}
 ~~~
 {: .language-bash}
 
+The admin explains to Lola that she is using a program known as the secure shell or `ssh`.
+This establishes a temporary encrypted connection between Lola's laptop and the cluster's login node
+named `{{ site.login_hostname }}`.
+The word before the `@` symbol, e.g. `lola` here, is Lola's user name on the cluster.
+
 > ## Logging in
 > 
-> If you do this material on your own, be sure to replace `lola` with the username that is attributed to you on {{ site.login_host }}. When you hit enter, a prompt like this might appear:
+> If you do this material on your own, be sure to replace `lola` with the username that is
+> assigned to you on `{{ site.cluster_name }}`. When you hit <kbd>Enter</kbd>, a prompt like this
+> might appear:
 >
 > ~~~
-> lola@{{ site.login_host }}'s password:
+> lola@{{ site.login_hostname }}'s password:
 > ~~~
 > {: .output}
 > 
 > Now is your chance to type in your password. But watch out, the characters you type are not displayed on the screen.
 {: .callout}
 
+After Lola's password is accepted, the following message may appear on her terminal:
+
 ~~~ 
 Last login: Fri Dec 14 14:13:14 2018 from lolas_laptop
-$ 
+[lola@{{ site.login_host }}] $
 ~~~
 {: .output}
-
-The admin explains to Lola that she is using a program known as the secure shell or `ssh`. This establishes a temporary encrypted connection between Lola's laptop and `{{ site.login_host }}`. The word before the `@` symbol, e.g. `lola` here, is the user account name that Lola has access permissions for on the cluster. 
 
 > ## Where do I get this `ssh` from ?
 > On Linux and/or macOS, the `ssh` command line utility is almost always pre-installed. Open a terminal and type `ssh --help` to check if that is the case. 
 > 
 > At the time of writing, the openssh support on Microsoft is still very [recent](https://blogs.msdn.microsoft.com/powershell/2017/12/15/using-the-openssh-beta-in-windows-10-fall-creators-update-and-windows-server-1709/). Alternatives to this are [putty](http://www.putty.org), [bitvise SSH](https://www.bitvise.com/ssh-client-download), [mRemoteNG](https://mremoteng.org/) or [MobaXterm](https://mobaxterm.mobatek.net/). Download it, install it and open the GUI. The GUI asks for your user name and the destination address or IP of the computer you want to connect to. Once provided, you will be queried for your password just like in the example above.
+{: .callout}
+
+> ## Understanding Computer Names
+>
+> There are multiple names which refer to the same super computer.
+>
+> * People's friendly name (`{{ site.cluster_name }}`): This is the non-technical name of the
+>   super computer, by which it is commonly known (both by the users and non-users of the
+>   computer).
+>
+> * Full host name (`{{ site.login_hostname }}`) is the name of a computer on the network.
+>   Technically, this is called [*fully qualified domain name*](
+>       https://en.wikipedia.org/wiki/Fully_qualified_domain_name
+>   ); behind the scene, it is mapped to the IP address of the computer.
+>   We must use the full host name to connect to the cluster using the `ssh` and (later) `scp`
+>   commands.
+>
+> * Short host name (`{{ site.login_host }}`) is the technical "nickname" of the computer.
+>   This is also displayed in the shell prompt, as shown in Lola's case right after she logs in
+>   to the cluster.
+>   (Usually it is the first word in the full host name, but sometimes it can be different.
+>   Some clusters have more than one login nodes, and this short name will tell you the
+>   exact login node that you are connecting to.)
+>
+> For convenience, we will frequently refer to the cluster's login node by its short name.
 {: .callout}
 
 Lola is asked to use a UNIX command called `ls` (for list directory contents) to have a look around. 
@@ -109,7 +142,10 @@ $ nproc --all
 ~~~
 {: .language-bash}
 
-- every cluster node has a certain amount of memory or [RAM](https://en.wikipedia.org/wiki/Random-access_memory) (Random-access memory). To see much memory `{{ site.login_host }}` in units of [Gigabyte](https://en.wikipedia.org/wiki/Gigabyte) has, Lola can run
+- every cluster node has a certain amount of memory or
+  [RAM](https://en.wikipedia.org/wiki/Random-access_memory) (Random-access memory).
+  To see how much memory `{{ site.login_host }}` has in units of
+  [Gigabyte](https://en.wikipedia.org/wiki/Gigabyte) has, Lola can run
 
 ~~~
 $ free -g
@@ -136,7 +172,7 @@ $ free -g
 The admin continues to explain, that typically people perform computationally heavy tasks on the cluster and prepare files that contain the results or a subset of data to create final results on the individuals laptop. So communication to and from the cluster is done mostly by transferring files. For example, Lola is asked to use a [file of her liking]({{page.root}}/filesystem/home/admin/this_weeks_canteen_menus/todays_canteen_menu.pdf) and transfer it over. For this, he advises her to use the secure copy command, `scp`. As before, this establishes a secure encrypted temporary connection between Lola's laptop and the cluster just for the sake of transferring the files. After the transfer has completed, scp will close the connection again.
 
 ~~~ 
-$ scp todays_canteen_menu.pdf lola@{{ site.login_host }}:todays_canteen_menu.pdf
+$ scp todays_canteen_menu.pdf lola@{{ site.login_hostname }}:todays_canteen_menu.pdf
 ~~~
 {: .language-bash}
 
@@ -148,7 +184,7 @@ todays_canteen_menu.pdf                                              100%   28KB
 She can now `ssh` into the cluster again and check, if the file has arrived after she just uploaded it:
 
 ~~~ 
-$ ssh lola@{{ site.login_host }}
+$ ssh lola@{{ site.login_hostname }}
 Last login: Tue Mar 14 14:17:44 2017 from lolas_laptop
 $ ls
 ~~~
@@ -162,11 +198,11 @@ todays_canteen_menu.pdf
 Now, let's try the other way around, i.e. downloading a file from the cluster to Lola's laptop. For this, Lola has to swap the two arguments of the `scp` command she just issued.
 
 ~~~ 
-$ scp lola@{{ site.login_host }}:todays_canteen_menu.pdf todays_canteen_menu_downloaded.pdf
+$ scp lola@{{ site.login_hostname }}:todays_canteen_menu.pdf todays_canteen_menu_downloaded.pdf
 ~~~
 {: .language-bash}
 
-Lola notices how the command line changed. First, she has to enter the source (`lola@{{ site.login_host }}`) then put a `:` and continue with the path of the file she wants to download. After that, separated by a space, the destination has to be provided, which in this case is a file `todays_canteen_menu_downloaded.pdf` in the current directory.
+Lola notices how the command line changed. First, she has to enter the source (`lola@{{ site.login_hostname }}`) then put a colon (`:`) and continue with the path of the file she wants to download. After that, separated by a space, the destination has to be provided, which in this case is a file `todays_canteen_menu_downloaded.pdf` in the current directory.
 
 ~~~
 todays_canteen_menu.pdf                                                100%   28KB  27.6KB/s   00:00
@@ -179,14 +215,14 @@ todays_canteen_menu.pdf                                                100%   28
 > Issueing a `ssh` command always entails the same logic of path or folder description than in the regular shell. For example,
 > 
 > ~~~ 
-> $ scp lola@{{ site.login_host }}:todays_canteen_menu.pdf todays_canteen_menu_downloaded.pdf
+> $ scp lola@{{ site.login_hostname }}:todays_canteen_menu.pdf todays_canteen_menu_downloaded.pdf
 > ~~~
 > {: .language-bash}
 > 
-> yields two relative paths. For the remote source `lola@{{ site.login_host }}:todays_canteen_menu.pdf`, the file name mentioned after the colon, is a relative path to the home directory. For brevity, this information is not shown. The same is true for the destination on the local machine `todays_canteen_menu_downloaded.pdf`. This is a relative path to the folder Lola currently works in. The same command as above expressed with absolute paths, could look like this (if Lola currently works inside `/home/lola/work`):
+> yields two relative paths. For the remote source `lola@{{ site.login_hostname }}:todays_canteen_menu.pdf`, the file name mentioned after the colon, is a relative path to the home directory. For brevity, this information is not shown. The same is true for the destination on the local machine `todays_canteen_menu_downloaded.pdf`. This is a relative path to the folder Lola currently works in. The same command as above expressed with absolute paths, could look like this (if Lola currently works inside `/home/lola/work`):
 >
 > ~~~ 
-> $ scp lola@{{ site.login_host }}:/home/lola/todays_canteen_menu.pdf /home/lola/work/todays_canteen_menu_downloaded.pdf
+> $ scp lola@{{ site.login_hostname }}:/home/lola/todays_canteen_menu.pdf /home/lola/work/todays_canteen_menu_downloaded.pdf
 > ~~~
 > {: .language-bash}
 {: .callout}
@@ -196,7 +232,7 @@ Lola has a look in the current directory and indeed `todays_canteen_menu_downloa
 To finish, The admin asks Lola that she can also transfer entire directories. She prepared a temporary directory on the cluster for her under `/tmp/this_weeks_canteen_menus`. She asks Lola to obtain a copy of the entire directory onto her laptop.
 
 ~~~ 
-$ scp -r lola@{{ site.login_host }}:/tmp/this_weeks_canteen_menus .
+$ scp -r lola@{{ site.login_hostname }}:/tmp/this_weeks_canteen_menus .
 ~~~
 {: .language-bash}
 
@@ -251,19 +287,19 @@ As a final word on this lesson, the admin tells Lola that she should never execu
 > Lola needs to obtain a file called `results.data` from a remote machine that is called `safe-store-1`. This machine is hidden behind the login node `{{ site.login_host }}`. However she mixed up the commands somehow that are needed to get the file onto her laptop. Help her and rearrange the following commands into the right order!
 >
 > ~~~
-> $ ssh lola@`{{ site.login_host }}`
+> $ ssh lola@{{ site.login_hostname }}
 > $ logout
-> $ scp lola@`{{ site.login_host }}`:results.data .
+> $ scp lola@{{ site.login_hostname }}:results.data .
 > $ scp lola@safe-store-1:results.data .
 > ~~~
 > {: .language-bash}
 >
 > > ## Solution
 > > ~~~
-> > $ ssh lola@`{{ site.login_host }}`
+> > $ ssh lola@{{ site.login_hostname }}
 > > $ scp lola@safe-store-1:results.data .
 > > $ logout
-> > $ scp lola@`{{ site.login_host }}`:results.data .
+> > $ scp lola@{{ site.login_hostname }}:results.data .
 > > ~~~
 > > {: .language-bash}
 > {: .solution}
@@ -285,14 +321,14 @@ As a final word on this lesson, the admin tells Lola that she should never execu
 > 
 > 1.
 > ~~~
-> $ ssh rob@{{ site.login_host }}
+> $ ssh rob@{{ site.login_hostname }}
 > $ unzip /tmp/passwords.zip
 > ~~~
 > {: .language-bash}
 > 
 > 2.
 > ~~~
-> $ scp {{ site.login_host }}@rob:/tmp/passwords.zip .
+> $ scp {{ site.login_hostname }}@rob:/tmp/passwords.zip .
 > $ unzip passwords.zip
 > ~~~
 > {: .language-bash}
@@ -300,7 +336,7 @@ As a final word on this lesson, the admin tells Lola that she should never execu
 > 3.
 > ~~~
 > $ cd /important/passwords
-> $ scp rob@{{ site.login_host }}:passwords.zip .
+> $ scp rob@{{ site.login_hostname }}:passwords.zip .
 > $ unzip passwords.zip
 > ~~~
 > {: .language-bash}
@@ -308,7 +344,7 @@ As a final word on this lesson, the admin tells Lola that she should never execu
 > 4.
 > ~~~
 > $ cd /important/passwords
-> $ scp rob@{{ site.login_host }}:/tmp/passwords.zip .
+> $ scp rob@{{ site.login_hostname }}:/tmp/passwords.zip .
 > $ unzip passwords.zip
 > ~~~
 > {: .language-bash}
