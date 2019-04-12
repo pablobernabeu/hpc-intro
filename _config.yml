@@ -75,9 +75,9 @@ start_time: 0
 # this is the scheduler to be used for the workshop
 # possible values: slurm (planned lsf & pbs)
 scheduler: "slurm"
-login_host: "cray-1"
-cluster_name: "cray-1"
-shared_fast_filesystem: "/fastfs"
+login_host: "turing.hpc.odu.edu"
+cluster_name: "Turing"
+shared_fast_filesystem: "/scratch-lustre"
 
 
 # Specify that things in the episodes collection should be output.
