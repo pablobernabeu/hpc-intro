@@ -53,7 +53,7 @@ if we don't care where the file goes.
 ```
 {: .bash}
 
-To recursively copy a directory, we just add the `-r` (recursive) flag:
+To recursively copy a directory, we just add the `-r` (recursive) flag (caution: doing this recursive option will multiply the number of files, often quickly):
 
 ```
 [local]$ scp -r some-local-folder/ yourUsername@remote.computer.address:target-directory/
@@ -157,7 +157,7 @@ Fetching /global/home/yourUsername/config.toml to config.toml
 ```
 {: .output}
 
-And we can recursively put/get files by just adding `-r`. Note that the directory needs to be
+And we can recursively put/get files by just adding `-r` (caution: doing this recursive option will multiply the number of files, often quickly). Note that the directory needs to be
 present beforehand.
 
 ```
